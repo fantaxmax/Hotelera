@@ -1,0 +1,30 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="master.master.cs" Inherits="Hotelera.master" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Hotel Oceanical</title>
+    <asp:ContentPlaceHolder ID="head" runat="server"><!-- aqui si necesitamos agregar algun estilo en particulas segun sea la pagina -Ismael -->
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div><!--Soy horrible con el diseño, la idea es que esto flote al centro, y contenga todo el contenido en si de la pagina -Ismael -->
+            <asp:ContentPlaceHolder ID="centerpage" runat="server">
+
+            </asp:ContentPlaceHolder>
+        </div>
+        
+        <div><!--La idea es que flote, no se al lado izquerdo, y contenga los hipervinculos a otras paginas, o alguna cosa adicional -Ismael -->
+            <!-- aqui tenemos el elemento que mantiene los hiperviculos, los añadimos mediante codebehind en base a si esta logeado, u otros -Ismael -->
+            <asp:Menu ID="navmenu" runat="server" Orientation="Vertical" />
+            <asp:ContentPlaceHolder ID="menubar" runat="server"><!-- aqui tenemos un espacio en caso necesitemos añadir algo en especial -Ismael -->
+
+            </asp:ContentPlaceHolder>  
+        </div>
+    </div>
+    </form>
+</body>
+</html>
