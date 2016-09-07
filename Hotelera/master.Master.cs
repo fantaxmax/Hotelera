@@ -11,9 +11,7 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            navmenu.MenuItemClick += Navmenu_MenuItemClick;
-            navmenu.Items.Add(new MenuItem("menu prueba","p"));
-            navmenu.Items.Add(new MenuItem("menu prueba 2", "p2"));
+            
         }
 
         private void Navmenu_MenuItemClick(object sender, MenuEventArgs e)
