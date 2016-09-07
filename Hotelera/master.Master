@@ -11,13 +11,14 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <div><!--Soy horrible con el diseño, la idea es que esto flote al centro, y contenga todo el contenido en si de la pagina -Ismael -->
+        <!--Soy horrible con el diseño, la idea es que esto flote al lado derecho, y contenga todo el contenido en si de la pagina -Ismael -->
+        <div style="display:inline-block;margin-top:100px;margin-left:25%">
             <asp:ContentPlaceHolder ID="centerpage" runat="server">
 
             </asp:ContentPlaceHolder>
         </div>
-        
-        <div><!--La idea es que flote, no se al lado izquerdo, y contenga los hipervinculos a otras paginas, o alguna cosa adicional -Ismael -->
+        <!--La idea es que flote, no se al lado izquerdo, y contenga los hipervinculos a otras paginas, o alguna cosa adicional -Ismael -->
+        <div style="float:left;margin-top:50px;margin-left:10px">
             <!-- aqui tenemos el elemento que mantiene los hiperviculos, los añadimos mediante codebehind en base a si esta logeado, u otros -Ismael -->
             <asp:Menu ID="navmenu" runat="server" Orientation="Vertical" />
             <asp:ContentPlaceHolder ID="menubar" runat="server"><!-- aqui tenemos un espacio en caso necesitemos añadir algo en especial -Ismael -->
