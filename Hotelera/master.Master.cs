@@ -46,8 +46,12 @@ namespace Hotelera
             }
             if(navmenu.SelectedValue == "clo")
             {
-                Session["usuario"] = null;
+                Session.Abandon();
                 Response.Redirect("Inicio.aspx");
+            }
+            if(navmenu.SelectedValue == "acc")
+            {
+                Response.Redirect("Cuenta.aspx");
             }
         }
 
