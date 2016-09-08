@@ -20,7 +20,7 @@
         <!--La idea es que flote, no se al lado izquerdo, y contenga los hipervinculos a otras paginas, o alguna cosa adicional -Ismael -->
         <div style="float:left;margin-top:50px;margin-left:10px">
             <!-- aqui tenemos el elemento que mantiene los hiperviculos, los añadimos mediante codebehind en base a si esta logeado, u otros -Ismael -->
-            <asp:Menu ID="navmenu" runat="server" Orientation="Vertical" OnMenuItemClick="Navmenu_MenuItemClick"/>
+            <asp:Menu ID="navmenu" runat="server" Orientation="Vertical" OnMenuItemClick="navmenu_MenuItemClick"/>
             <asp:ContentPlaceHolder ID="menubar" runat="server"><!-- aqui tenemos un espacio en caso necesitemos añadir algo en especial -Ismael -->
 
             </asp:ContentPlaceHolder>  
