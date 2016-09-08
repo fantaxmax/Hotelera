@@ -27,10 +27,10 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="btnRegistro" Text="Registrarse" runat="server" OnClick="btnRegistro_Click" />
+                    <asp:Button ID="btnRegistro" Text="Registrarse" runat="server" OnClick="btnRegistro_Click" UseSubmitBehavior="false" />
                 </td>
                 <td>
-                    <asp:Button ID="btnInicioSesion" Text="Iniciar Sesión" runat="server" OnClick="btnInicioSesion_Click" />
+                    <asp:Button ID="btnInicioSesion" Text="Iniciar Sesión" runat="server" OnClick="btnInicioSesion_Click"  />
                 </td>
             </tr>
         </table>

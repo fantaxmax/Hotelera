@@ -32,6 +32,7 @@ namespace Hotelera
             {
                 Session["usuario"] = (Usuario)v;
             }
+            Response.Redirect("Inicio.aspx");
         }
     }
 }

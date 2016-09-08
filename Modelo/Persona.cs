@@ -21,7 +21,15 @@ namespace Modelo
          * 
          *
          */
-        
+        public Persona(int _rut,char _dv,string _nombres, string _apellidos,DateTime _fechaNac)
+        {
+            Rut = _rut;
+            Dv = _dv;
+            Nombre = _nombres;
+            Apellidos = _apellidos;
+            FechaNac = _fechaNac;
+        }
+
         public int Rut
         {
             //creo que el set deberia ser solo a nivel de clase

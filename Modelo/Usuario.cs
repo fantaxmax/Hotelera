@@ -11,6 +11,12 @@ namespace Modelo
         private Persona _persona;
         private string _pwd;//deberiamos guardarla hasheada
 
+        public Usuario(Persona _persona,string _pwd)
+        {
+            Persona = _persona;
+            Pwd = _pwd;
+        }
+
         public Persona Persona
         {
             get { return _persona; }
