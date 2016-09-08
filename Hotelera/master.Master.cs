@@ -11,7 +11,14 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            navmenu.Items.Add(new MenuItem("Inicio", "ini"));
+            if(((String)(Session["usuario"]))!=null)
+            {
+                navmenu.Items.Add(new MenuItem("Reservas", "res"));
+            } else
+            {
+
+            }
         }
 
         private void Navmenu_MenuItemClick(object sender, MenuEventArgs e)
