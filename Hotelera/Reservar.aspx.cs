@@ -16,7 +16,7 @@ namespace Hotelera
         }
 
         private void inicializarCampos()
-        {
+        {   
             inicializarHabitaciones();
             List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
             cdFechaIngreso.SelectedDate = DateTime.Now;
@@ -26,90 +26,109 @@ namespace Hotelera
                List <Reserva> res = new List<Reserva>(); ;
                Session["reservas"] = res;
              }
-             txtCosto.Text = "0";
+            txtCosto.Text = "0";
                     
         }
         
         protected void cambioFecIni(Object sender, EventArgs e) 
         {
-            List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);            
-            List<DateTime> seleccionActual = new List<DateTime>();
-            List<Habitacion> ocupadas = new List<Habitacion>();
-            Habitacion seleccionada = null;
-            for (DateTime ing = cdFechaIngreso.SelectedDate ; ing < cdFechaSalida.SelectedDate; ing.AddDays(1.0))
+            if (cdFechaIngreso.SelectedDate < cdFechaSalida.SelectedDate)
             {
-                   seleccionActual.Add(ing);
-            }
-            foreach (Reserva r in reservas)
-            {
-                List<DateTime> estadia = new List<DateTime>();
-                for (DateTime f = r.FechaIngreso ; f < r.FechaRetiro; f.AddDays(1.0))
+                List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
+                List<Habitacion> habitaciones = (List<Habitacion>)(Session["habitaciones"]);
+                List<DateTime> seleccionActual = new List<DateTime>();
+                List<Habitacion> ocupadas = new List<Habitacion>();
+                Habitacion seleccionada = null;
+                for (DateTime ing = cdFechaIngreso.SelectedDate; ing < cdFechaSalida.SelectedDate; ing.AddDays(1.0))
                 {
-                    estadia.Add(f);
+                    seleccionActual.Add(ing);
                 }
+                foreach (Reserva r in reservas)
+                {
+                    List<DateTime> estadia = new List<DateTime>();
+                    for (DateTime f = r.FechaIngreso; f < r.FechaRetiro; f.AddDays(1.0))
+                    {
+                        estadia.Add(f);
+                    }
 
-                for (int i = 0; i < estadia.Count; i++)
-                {
-                    foreach (DateTime fecha in seleccionActual)
-	                {
-		                if(estadia.ElementAt(i) == fecha)
+                    for (int i = 0; i < estadia.Count; i++)
+                    {
+                        foreach (DateTime fecha in seleccionActual)
                         {
-                            ocupadas.Add(r.Habitacion);
-                            txtError.Text = "Fecha no disponible";
-                            txtError.Visible = true;
-                            break;
+                            if (estadia.ElementAt(i) == fecha)
+                            {
+                                ocupadas.Add(r.Habitacion);
+                                txtError.Text = "Fecha no disponible";
+                                txtError.Visible = true;
+                                break;
+                            }
+                            else
+                            {
+                                foreach (Habitacion h in habitaciones)
+                                {
+                                    if (lstHabitaciones.SelectedValue.Equals(h.Numero.ToString()))
+                                    {
+                                        seleccionada = h;
+                                        txtCosto.Text = (new Reserva(cdFechaIngreso.SelectedDate, cdFechaSalida.SelectedDate, seleccionada)).CostoReserva.ToString();
+                                    }
+                                }
+                            }
                         }
-                        else
-	                    {
-                            foreach (Habitacion h in (List<Habitacion>)(Session["habitaciones"]))
-	                        {
-		                        if (lstHabitaciones.SelectedValue.Equals(h.Numero.ToString()))
-	                            {
-		                            seleccionada = h;
-                                    txtCosto.Text = (new Reserva(cdFechaIngreso.SelectedDate, cdFechaSalida.SelectedDate, seleccionada)).CostoReserva.ToString(); 
-	                            }
-	                        }
-	                    }
-	                }                
+                    }
                 }
-             }
-            Session["Ocupadas"] = ocupadas;
+                Session["Ocupadas"] = ocupadas;
+            }
         } 
 
 
         protected void cambioFecSal(Object sender, EventArgs e)
         {
-                
-            List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
-            List<DateTime> seleccionActual = new List<DateTime>();
-            List<Habitacion> ocupadas = new List<Habitacion>();
-            for (DateTime ing = cdFechaIngreso.SelectedDate; ing < cdFechaSalida.SelectedDate; ing.AddDays(1.0))
+            if (cdFechaIngreso.SelectedDate < cdFechaSalida.SelectedDate)
             {
-                seleccionActual.Add(ing);
-            }
-            foreach (Reserva r in reservas)
-            {
-                List<DateTime> estadia = new List<DateTime>();
-                for (DateTime f = r.FechaIngreso; f < r.FechaRetiro; f.AddDays(1.0))
+                List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
+                List<Habitacion> habitaciones = (List<Habitacion>)(Session["habitaciones"]);
+                List<DateTime> seleccionActual = new List<DateTime>();
+                List<Habitacion> ocupadas = new List<Habitacion>();
+                Habitacion seleccionada = null;
+                for (DateTime ing = cdFechaIngreso.SelectedDate; ing < cdFechaSalida.SelectedDate; ing.AddDays(1.0))
                 {
-                    estadia.Add(f);
+                    seleccionActual.Add(ing);
                 }
-
-                for (int i = 0; i < estadia.Count; i++)
+                foreach (Reserva r in reservas)
                 {
-                    foreach (DateTime fecha in seleccionActual)
+                    List<DateTime> estadia = new List<DateTime>();
+                    for (DateTime f = r.FechaIngreso; f < r.FechaRetiro; f.AddDays(1.0))
                     {
-                        if (estadia.ElementAt(i) == fecha)
+                        estadia.Add(f);
+                    }
+
+                    for (int i = 0; i < estadia.Count; i++)
+                    {
+                        foreach (DateTime fecha in seleccionActual)
                         {
-                            ocupadas.Add(r.Habitacion);
-                            txtError.Text = "Fecha no disponible";
-                            txtError.Visible = true;
-                            break;
+                            if (estadia.ElementAt(i) == fecha)
+                            {
+                                ocupadas.Add(r.Habitacion);
+                                txtError.Text = "Fecha no disponible";
+                                txtError.Visible = true;
+                                break;
+                            }
+                            else
+                            {
+                                foreach (Habitacion h in habitaciones)
+                                {
+                                    if (lstHabitaciones.SelectedValue.Equals(h.Numero.ToString()))
+                                    {
+                                        seleccionada = h;
+                                        txtCosto.Text = (new Reserva(cdFechaIngreso.SelectedDate, cdFechaSalida.SelectedDate, seleccionada)).CostoReserva.ToString();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-             }
-             Session["Ocupadas"] = ocupadas;
+                Session["Ocupadas"] = ocupadas;
+            }
         }
         
         protected void ingresarReserva()
@@ -132,11 +151,17 @@ namespace Hotelera
         {
             Habitacion Hab101 = new Habitacion(101, TipoHabitacion.Single, 20000);
             Habitacion Hab201 = new Habitacion(201, TipoHabitacion.Doble, 40000);
-            Habitacion Hab301 = new Habitacion(301, TipoHabitacion.Suite, 60000);
-            List<Habitacion> habitaciones = new List<Habitacion>();
-            habitaciones.Add(Hab101);
-            habitaciones.Add(Hab201);
-            habitaciones.Add(Hab301);
+            Habitacion Hab301 = new Habitacion(301, TipoHabitacion.Suite, 60000);         
+            List<Habitacion> habitaciones = (List<Habitacion>)(Session["habitaciones"]);
+            if( habitaciones == null)  
+            {
+                habitaciones = new List<Habitacion>()
+                {
+                  Hab101,
+                  Hab201,
+                  Hab301
+                };
+            }
             List<Habitacion> ocupadas = (List<Habitacion>)(Session["ocupadas"]);
             if (ocupadas != null)
             {
@@ -151,11 +176,12 @@ namespace Hotelera
                     }
                 }
             }
-                Session["habitaciones"] = habitaciones;  
-                foreach (Habitacion h in habitaciones)
-                {
-                    lstHabitaciones.Items.Add(new ListItem(h.Numero.ToString()));
-                }
+            Session["habitaciones"] = habitaciones;  
+            foreach (Habitacion h in habitaciones)
+            {
+                lstHabitaciones.ClearSelection();
+                lstHabitaciones.Items.Add(new ListItem(h.Numero.ToString()));
+            }
            
         }
 
@@ -164,7 +190,7 @@ namespace Hotelera
         protected void clickReservar(Object sender, EventArgs e)
         {
             ingresarReserva();
-            Server.Transfer("Inicio.aspx");
+            Response.Redirect("Inicio.aspx");
         }
     }
 }

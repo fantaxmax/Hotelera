@@ -42,7 +42,7 @@ namespace Hotelera
             }
             if (navmenu.SelectedValue == "res")
             {
-                Server.Transfer("Reservar.aspx");    
+                Response.Redirect("Reservar.aspx");  
             }
             if(navmenu.SelectedValue == "ses")
             {

@@ -15,8 +15,8 @@
         <asp:TableHeaderCell><asp:Calendar ID="cdFechaSalida" runat="server" Height="5px" Width="10px" OnSelectionChanged="cambioFecSal"></asp:Calendar></asp:TableHeaderCell>
     </asp:TableRow>
     <asp:TableRow>
-        <asp:TableHeaderCell>Habitaciones Disp: <asp:DropDownList ID="lstHabitaciones" runat="server" Width ="70px" OnSelectedIndexChanged="cambioHabitacion"></asp:DropDownList></asp:TableHeaderCell>
-        <asp:TableHeaderCell>Costo: <asp:TextBox ID="txtCosto" runat="server"></asp:TextBox></asp:TableHeaderCell>
+        <asp:TableHeaderCell>Habitaciones Disp: <asp:DropDownList ID="lstHabitaciones" runat="server" Width ="70px"></asp:DropDownList></asp:TableHeaderCell>
+        <asp:TableHeaderCell>Costo: <asp:TextBox ID="txtCosto" runat="server" Enabled="false"></asp:TextBox></asp:TableHeaderCell>
     </asp:TableRow>
     <asp:TableRow>
         <asp:TableHeaderCell>
