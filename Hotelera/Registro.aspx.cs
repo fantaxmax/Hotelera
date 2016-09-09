@@ -30,10 +30,7 @@ namespace Hotelera
                 for (int i = hasta; i <= DateTime.Today.Year; i++)
                     dpano.Items.Add(i.ToString());
             }
-            if(Request.QueryString.Get("hpwd") != null)
-            {
-
-            }
+            
         }
 
 
