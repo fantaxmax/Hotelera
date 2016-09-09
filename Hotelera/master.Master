@@ -14,6 +14,13 @@
         <div>
             <table>
                 <tr>
+                    <td colspan="3">
+                        <div style="float:right">
+                            <img src="Images/logo.png" alt="Logo" />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         <div style="float: left; margin-top: 50px; margin-left: 10px">
                             <!-- aqui tenemos el elemento que mantiene los hiperviculos, los añadimos mediante codebehind en base a si esta logeado, u otros -Ismael -->

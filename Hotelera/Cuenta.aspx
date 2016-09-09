@@ -59,13 +59,13 @@
                     <span>Clave</span>
                 </td>
                 <td colspan="2">
-                    <asp:Button ID="btnclave" Text="Cambiar" runat="server" />
+                    <asp:Button ID="btnclave" Text="Cambiar" runat="server" OnClick="btnclave_Click" />
                 </td>
             </tr>
             <tr>
                 <td colspan="3">
                     <div><!--la intencion es que este al centro -Ismael -->
-                        <asp:Button ID="btnActualiza" Text="Actualizar" runat="server" />
+                        <asp:Button ID="btnActualiza" Text="Actualizar" runat="server" OnClick="btnActualiza_Click" />
                     </div>
                 </td>
             </tr>

@@ -18,5 +18,15 @@ namespace Hotelera
             calNac.SelectedDate = u.Persona.FechaNac;
             calNac.VisibleDate = u.Persona.FechaNac;
         }
+
+        protected void btnActualiza_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnclave_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

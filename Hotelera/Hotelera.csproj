@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cuenta.aspx" />
+    <Content Include="Images\logo.png" />
     <Content Include="Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="packages.config" />
