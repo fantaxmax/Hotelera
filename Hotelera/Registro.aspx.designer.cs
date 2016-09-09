@@ -13,6 +13,24 @@ namespace Hotelera {
     public partial class Registro {
         
         /// <summary>
+        /// titulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label titulo;
+        
+        /// <summary>
+        /// erro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label erro;
+        
+        /// <summary>
         /// txtNom control.
         /// </summary>
         /// <remarks>

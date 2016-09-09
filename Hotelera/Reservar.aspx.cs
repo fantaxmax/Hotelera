@@ -109,7 +109,7 @@ namespace Hotelera
             else
             {
                 ingresarReserva();
-                Response.Redirect("Inicio.aspx");
+                Response.Redirect("Reservas.aspx");
             }
         }
 

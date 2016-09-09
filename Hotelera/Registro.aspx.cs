@@ -33,11 +33,19 @@ namespace Hotelera
                 for (int i = hasta; i <= DateTime.Today.Year; i++)
                     dpano.Items.Add(i.ToString());
             }
-            if(Request.Form.Get("txtpwd")!=null)
+            if (Request.Form.Get("txtpwd") != null)
             {
                 txtContra.Text = Request.Form.Get("txtpwd");
                 txtRut.Text = Request.Form.Get("txtrut");
                 Request.Form.Remove("txtpwd");
+            }
+            string reg = Request.QueryString.Get("o");
+            if(reg!=null)
+            {
+                if(reg=="reg")
+                {
+                    titulo.Text = "Registrate para Reservar";
+                }
             }
         }
 
@@ -46,17 +54,45 @@ namespace Hotelera
         /*no cacho muy bien que deberia ir en este evento*/
         protected void btnRegistra_Click(object sender, EventArgs e)
         {
-            if(txtRut.Text!=""&& txtNom.Text != "" && txtApe.Text != "" && txtContra.Text != "" && txtContraConf.Text != "")
+            if (validaRut(txtRut.Text))
             {
-                if(txtContra.Text==txtContraConf.Text)
+                if (txtRut.Text != "" && txtNom.Text != "" && txtApe.Text != "" && txtContra.Text != "" && txtContraConf.Text != "")
                 {
-                    string[] rut = txtRut.Text.Split('-');
-                    Persona p = new Persona(int.Parse(rut[0]), rut[1][0], txtNom.Text, txtApe.Text, calNac.SelectedDate);
-                    Usuario u = new Usuario(p, encryption(txtContra.Text));
-                    List<Usuario> usuarios = (List<Usuario>)Session["usuarios"];
-                    usuarios.Add(u);
+                    if (txtContra.Text == txtContraConf.Text)
+                    {
+                        string[] rut = txtRut.Text.Split('-');
+                        Persona p = new Persona(int.Parse(rut[0].Replace(".","")), rut[1][0], txtNom.Text, txtApe.Text, calNac.SelectedDate);
+                        Usuario u = new Usuario(p, encryption(txtContra.Text));
+                        List<Usuario> usuarios = (List<Usuario>)Session["usuarios"];
+                        if(Request.QueryString.Get("o")=="reg")
+                        {
+                            Reserva r = (Reserva)Session["reserva"];
+                            List<Reserva> res = (List<Reserva>)Session["reservas"];
+                            u.reservas.Add(r);
+                            res.Add(r);
+                        }
+                        usuarios.Add(u);
+                        Session["usuario"] = u;
+                        Response.Redirect("Reservas.aspx?o=ok");
+                    }
+                    else
+                    {
+                        erro.Text = "Contraseñas no coinciden, reintente...";
+                        erro.Visible = true;
+                    }
+                }
+                else
+                {
+                    erro.Text = "No has ingresado todos los campos";
+                    erro.Visible = true;
                 }
             }
+            else
+            {
+                erro.Visible = true;
+                erro.Text = "Rut no valido, reingrese";
+            }
+
         }
 
         public string encryption(String password)
@@ -93,6 +129,48 @@ namespace Hotelera
             DateTime fecha = new DateTime(ano, mes, dia);
             calNac.SelectedDate = fecha;
             calNac.VisibleDate = fecha;
+        }
+
+        protected bool validaRut(string rut) //codigo prestado desde http://www.qualityinfosolutions.com/validador-de-rut-chileno-en-c/
+        {
+            bool validacion = false;
+            try
+            {
+                rut = rut.ToUpper();
+                if (!rut.Contains('-'))
+                    return false;
+                rut = rut.Replace(".", "");
+                rut = rut.Replace("-", "");
+                int rutAux = int.Parse(rut.Substring(0, rut.Length - 1));
+
+                char dv = char.Parse(rut.Substring(rut.Length - 1, 1));
+
+                int m = 0, s = 1;
+                for (; rutAux != 0; rutAux /= 10)
+                {
+                    s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
+                }
+                if (dv == (char)(s != 0 ? s + 47 : 75))
+                {
+                    validacion = true;
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return validacion;
+        }
+
+        protected void txtNom_TextChanged(object sender, EventArgs e)
+        {
+            erro.Visible = false;
+            erro.Text = "";
+        }
+
+        protected void txtContra_TextChanged(object sender, EventArgs e)
+        {
+            erro.Text = "";
+            erro.Visible = false;
         }
     }
 }

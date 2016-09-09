@@ -7,17 +7,17 @@
         <table> 
             <tr>
                 <td colspan="3">
-                    <h1>Mi Cuenta</h1>
+                    <h1><asp:Label ID="titulo" runat="server" Text="Registro"/></h1>
                 </td>
             </tr>
-            <tr><td colspan="3"><br /></td></tr>
+            <tr><td colspan="3"><asp:Label ID="erro" runat="server" Visible="False" ForeColor="Red" /></td></tr>
             <tr>
                 <td>
                     <span>Nombres</span>
                 </td>
                 <td style="width:20px"><span>:</span></td>
                 <td>
-                    <asp:TextBox ID="txtNom" runat="server" style="width:330px"/>
+                    <asp:TextBox ID="txtNom" runat="server" style="width:330px" OnTextChanged="txtNom_TextChanged"/>
                 </td>
             </tr>
             <tr>
@@ -26,7 +26,7 @@
                 </td>
                 <td style="width:20px"><span>:</span></td>
                 <td>
-                    <asp:TextBox ID="txtApe" runat="server" style="width:330px"/>
+                    <asp:TextBox ID="txtApe" runat="server" style="width:330px" OnTextChanged="txtNom_TextChanged"/>
                 </td>
             </tr>
             <tr>
@@ -35,7 +35,7 @@
                 </td>
                 <td style="width:20px"><span>:</span></td>
                 <td>
-                    <asp:TextBox ID="txtRut" runat="server" style="width:330px"/>
+                    <asp:TextBox ID="txtRut" runat="server" style="width:330px" OnTextChanged="txtNom_TextChanged"/>
                 </td>
             </tr>
             <tr>
@@ -60,16 +60,18 @@
                 <td>
                     <span>Contraseña</span>
                 </td>
-                <td colspan="2">
-                    <asp:TextBox ID="txtContra" TextMode="Password" runat="server" />
+                <td style="width:20px"><span>:</span></td>
+                <td>
+                    <asp:TextBox ID="txtContra" TextMode="Password" runat="server" style="width:330px" OnTextChanged="txtContra_TextChanged" />
                 </td>
             </tr>
             <tr>
                 <td>
                     <span>Confirmar</span>
                 </td>
-                <td colspan="2">
-                    <asp:TextBox ID="txtContraConf" TextMode="Password" runat="server" />
+                <td style="width:20px"><span>:</span></td>
+                <td>
+                    <asp:TextBox ID="txtContraConf" TextMode="Password" runat="server" style="width:330px" OnTextChanged="txtContra_TextChanged" />
                 </td>
             </tr>
             <tr>

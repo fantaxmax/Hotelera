@@ -24,6 +24,11 @@
         <table>
             <tr>
                 <td>
+                    <asp:Label ID="mensaje" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <span>Reservas Activas</span>
                 </td>
             </tr>
