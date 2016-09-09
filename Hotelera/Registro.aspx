@@ -44,8 +44,8 @@
                 </td>
                 <td style="width:20px"><span></span></td>
                 <td>
-                    <asp:DropDownList ID="dpmes" runat="server" /><asp:DropDownList ID="dpano" runat="server" /><br />
-                    <asp:Calendar ID="calNac" runat="server" BackColor="White" BorderColor="Black" BorderStyle="Solid" CellSpacing="1" Font-Names="Verdana" Font-Size="9pt" ForeColor="Black" Height="250px" NextPrevFormat="ShortMonth" Width="330px" ShowTitle="False" >
+                    <asp:DropDownList ID="dpmes" runat="server" OnSelectedIndexChanged="dpmes_SelectedIndexChanged" AutoPostBack="True"/><asp:DropDownList ID="dpano" runat="server" OnSelectedIndexChanged="dpano_SelectedIndexChanged" AutoPostBack="True" /><br />
+                    <asp:Calendar ID="calNac" runat="server" BackColor="White" BorderColor="Black" BorderStyle="Solid" CellSpacing="1" Font-Names="Verdana" Font-Size="9pt" ForeColor="Black" Height="250px" NextPrevFormat="ShortMonth" Width="330px" ShowTitle="False" SelectedDate="1980-01-01" >
                         <DayHeaderStyle Font-Bold="True" Font-Size="8pt" ForeColor="#333333" Height="8pt" />
                         <DayStyle BackColor="#CCCCCC" />
                         <NextPrevStyle Font-Bold="True" Font-Size="8pt" ForeColor="White" />

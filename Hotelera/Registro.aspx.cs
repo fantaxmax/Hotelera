@@ -11,26 +11,32 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-        }
-        ///*la idea es que se despliegue el calendario con el boton*/
-        //protected void btnMuestraCalendario_Click(object sender, ImageClickEventArgs e)
-        //{
-        //    if (calendario1.Visible)
-        //    {
-        //        calendario1.Visible = false;
-        //    }
-        //    else
-        //    {
-        //        calendario1.Visible = true;
-        //    }
-        //}  Elimino el boton para dejarlo visible siempre, dando la opcion de elejir mes y año en combobox
+            if (dpmes.Items.Count == 0)
+            {
+                ListItem[] ls = { new ListItem("Enero","1"),
+                              new ListItem("Febrero","2"),
+                              new ListItem("Marzo","3"),
+                              new ListItem("Abril","4"),
+                              new ListItem("Mayo","5"),
+                              new ListItem("Junio","6"),
+                              new ListItem("Julio","7"),
+                              new ListItem("Agosto","8"),
+                              new ListItem("Septiembre","9"),
+                              new ListItem("Octubre","10"),
+                              new ListItem("Noviembre","11"),
+                              new ListItem("Diciembre","12") };
+                dpmes.Items.AddRange(ls);
+                int hasta = DateTime.Today.Year - 85;
+                for (int i = hasta; i <= DateTime.Today.Year; i++)
+                    dpano.Items.Add(i.ToString());
+            }
+            if(Request.QueryString.Get("hpwd") != null)
+            {
 
-        //protected void calendario1_SelectionChanged(object sender, EventArgs e)
-        //{
-        //    txtFec.Text = calendario1.SelectedDate.ToLongDateString();
-        //    calendario1.Visible = false;
-        //}
+            }
+        }
+
+
 
         /*no cacho muy bien que deberia ir en este evento*/
         protected void btnRegistra_Click(object sender, EventArgs e)
@@ -38,5 +44,24 @@ namespace Hotelera
             Server.Transfer("Login.aspx");
         }
 
+        protected void dpmes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int ano = int.Parse(dpano.SelectedValue);
+            int mes = int.Parse(dpmes.SelectedValue);
+            int dia = calNac.SelectedDate.Day;
+            DateTime fecha = new DateTime(ano, mes, dia);
+            calNac.SelectedDate = fecha;
+            calNac.VisibleDate = fecha;
+        }
+
+        protected void dpano_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int ano = int.Parse(dpano.SelectedValue);
+            int mes = int.Parse(dpmes.SelectedValue);
+            int dia = calNac.SelectedDate.Day;
+            DateTime fecha = new DateTime(ano, mes, dia);
+            calNac.SelectedDate = fecha;
+            calNac.VisibleDate = fecha;
+        }
     }
 }

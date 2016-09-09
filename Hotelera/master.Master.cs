@@ -53,6 +53,10 @@ namespace Hotelera
             {
                 Response.Redirect("Cuenta.aspx");
             }
+            if(navmenu.SelectedValue == "reg")
+            {
+                Response.Redirect("Registro.aspx");
+            }
         }
 
         protected List<Usuario> crearUsuarios()
