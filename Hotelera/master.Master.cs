@@ -40,6 +40,10 @@ namespace Hotelera
             {
                 Response.Redirect("Inicio.aspx");
             }
+            if (navmenu.SelectedValue == "res")
+            {
+                Server.Transfer("Reservar.aspx");    
+            }
             if(navmenu.SelectedValue == "ses")
             {
                 Server.Transfer("Login.aspx");
