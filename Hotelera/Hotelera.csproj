@@ -79,6 +79,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Registro.aspx" />
     <Content Include="Reservar.aspx" />
     <Content Include="Reservas.aspx" />
     <Content Include="Web.config" />
@@ -113,6 +114,13 @@
       <DependentUpon>master.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registro.aspx.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registro.aspx.designer.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reservar.aspx.cs">
       <DependentUpon>Reservar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
