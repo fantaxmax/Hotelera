@@ -41,7 +41,7 @@ namespace Modelo
             _costoDiario = costoDiario;
         }
 
-        public string toString()
+        public override string ToString()
         {
             return Numero + " : " + (Tipo == TipoHabitacion.Single ? "Single" : (Tipo == TipoHabitacion.Doble ? "Doble" : "Suite"));
         }
