@@ -22,10 +22,11 @@ namespace Hotelera
             }
             navmenu.Items.Clear();
             navmenu.Items.Add(new MenuItem("Inicio", "ini"));
+            navmenu.Items.Add(new MenuItem("Reservar Habitacion", "res"));
             if (u != null)
             {
                 navmenu.Items.Add(new MenuItem(String.Format("Mi Cuenta - {0}",u.Persona.Nombre), "acc"));
-                navmenu.Items.Add(new MenuItem("Reservas", "res"));
+                navmenu.Items.Add(new MenuItem("Reservas", "re"));
                 navmenu.Items.Add(new MenuItem("Cerrar Sesión", "clo"));
 
             }
@@ -59,6 +60,10 @@ namespace Hotelera
             {
                 Response.Redirect("Registro.aspx");
             }
+            if(navmenu.SelectedValue == "re")
+            {
+                Response.Redirect("Reservas.aspx");
+            }
         }
 
         protected List<Usuario> crearUsuarios()
@@ -66,7 +71,7 @@ namespace Hotelera
             List<Usuario> usuarios = new List<Usuario>();
             Persona p = new Persona(123, 'a', "asdf", "qwerty", new DateTime(2000, 12, 12));
             Usuario u = new Usuario(p, encryption("asdf"));
-            Reserva r = new Reserva(new DateTime(2015, 12, 21), new DateTime(2015, 12, 25), new Habitacion(201, TipoHabitacion.Single, 5630.4));
+            Reserva r = new Reserva(new DateTime(2015, 12, 21), new DateTime(2015, 12, 25), new Habitacion(999, TipoHabitacion.Single, 5630.4));
             u.reservas.Add(r);
             usuarios.Add(u);
             return usuarios;
