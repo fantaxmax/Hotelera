@@ -10,14 +10,15 @@ namespace Hotelera
 {
     public partial class Reservar : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e){
-
+        protected void Page_Load(object sender, EventArgs e)
+        {
             inicializarCampos();
         }
 
         private void inicializarCampos()
-        {   
-            inicializarHabitaciones();
+        {
+            if (lstHabitaciones.Items.Count == 0)
+                inicializarHabitaciones();
             List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
             cdFechaIngreso.SelectedDate = DateTime.Now;
             cdFechaSalida.SelectedDate = DateTime.Now;
