@@ -10,11 +10,13 @@ namespace Modelo
     {
         private Persona _persona;
         private string _pwd;//deberiamos guardarla hasheada
+        public List<Reserva> reservas;
 
         public Usuario(Persona _persona,string _pwd)
         {
             Persona = _persona;
             Pwd = _pwd;
+            reservas = new List<Reserva>();
         }
 
         public Persona Persona
