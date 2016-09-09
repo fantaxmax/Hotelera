@@ -30,7 +30,12 @@ namespace Hotelera
                 for (int i = hasta; i <= DateTime.Today.Year; i++)
                     dpano.Items.Add(i.ToString());
             }
-            
+            if(Request.Form.Get("txtpwd")!=null)
+            {
+                txtContra.Text = Request.Form.Get("txtpwd");
+                txtRut.Text = Request.Form.Get("txtrut");
+                Request.Form.Remove("txtpwd");
+            }
         }
 
 
@@ -38,7 +43,7 @@ namespace Hotelera
         /*no cacho muy bien que deberia ir en este evento*/
         protected void btnRegistra_Click(object sender, EventArgs e)
         {
-            Server.Transfer("Login.aspx");
+            
         }
 
         protected void dpmes_SelectedIndexChanged(object sender, EventArgs e)
