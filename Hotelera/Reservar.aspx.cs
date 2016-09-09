@@ -12,36 +12,42 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            inicializarCampos();
-        }
-
-        private void inicializarCampos()
-        {
-            List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
-            cdFechaIngreso.SelectedDate = DateTime.Now.AddDays(1);
-            cdFechaSalida.SelectedDate = DateTime.Now.AddDays(6);
-            cdFechaIngreso.VisibleDate = cdFechaIngreso.SelectedDate;
-            cdFechaSalida.VisibleDate = cdFechaSalida.SelectedDate;
-            //movida inicializacion de reservas a masterpage
-            txtCosto.Text = "0";
-
+            if (Request.QueryString.Get("e") != null)
+            {
+                Session["e"] = Request.QueryString.Get("e");
+                Response.Redirect("Reservar.aspx");
+            }
+            string er = (string)Session["e"];
+            if (er != null)
+            {
+                erro.Text = "La Fecha de Entrada no puede ser antes de Hoy";
+                erro.Visible = true;
+                erro.ForeColor = System.Drawing.Color.Red;
+            }
+            if (!IsPostBack)
+            {
+                cdFechaIngreso.SelectedDate = DateTime.Now;
+                cdFechaSalida.SelectedDate = DateTime.Now.AddDays(1);
+            }
         }
 
         protected void cambioFecIni(Object sender, EventArgs e)
         {
+            TimeSpan tshoy = cdFechaIngreso.SelectedDate - DateTime.Now;
+            if (tshoy.Days < 0)//si el dia de entrada es menor al dia actual
+                Response.Redirect("Reservar.aspx?e=e");
             TimeSpan ts = cdFechaSalida.SelectedDate - cdFechaIngreso.SelectedDate;
-            if (ts.Days < 0)
+            if (ts.Days < 0) //si el dia de salida es antes que el dia se entrada
             {
-                //agregar rutina de aviso de error por ahora cambia la fecha de salida a un dia mas -Ismael
-                cdFechaSalida.SelectedDate.AddDays(1);
+                cdFechaSalida.SelectedDate = cdFechaIngreso.SelectedDate.AddDays(4);
                 cdFechaSalida.VisibleDate = cdFechaSalida.SelectedDate;
             }
-            else
+            if ((string)Session["e"] != null)
             {
-                //agregamos automaticamente 5 dias a la fecha de salida
-                cdFechaSalida.SelectedDate.AddDays(5);
-                cdFechaSalida.VisibleDate = cdFechaSalida.SelectedDate;
+                erro.Visible = false;
+                Session["e"] = null;
             }
+            cambioFecSal(sender, e);
         }
 
 
@@ -50,9 +56,9 @@ namespace Hotelera
             TimeSpan ts = cdFechaSalida.SelectedDate - cdFechaIngreso.SelectedDate;
             if (ts.Days < 0) //si el dia de salida es antes que el dia se entrada
             {
-                //agregar rutina que notifique error -Ismael
-                cdFechaIngreso.SelectedDate.AddDays(-1);
-                cdFechaIngreso.VisibleDate = cdFechaIngreso.SelectedDate;
+                cdFechaSalida.SelectedDate = cdFechaIngreso.SelectedDate.AddDays(4);
+                cdFechaSalida.VisibleDate = cdFechaSalida.SelectedDate;
+                cambioFecSal(sender, e);
             }
             else //si esta todo correcto con las fechas, cargamos las habitaciones
             {
@@ -74,9 +80,10 @@ namespace Hotelera
                         lstHabitaciones.Items.Add(new ListItem(h.ToString(), h.Numero.ToString()));
                     }
                 }
-                if (lstHabitaciones.Items.Count == 1)
+                if (lstHabitaciones.Items.Count >= 1)
                 {
-                    lstHabitaciones.SelectedValue = lstHabitaciones.Items[0].Value;
+                    lstHabitaciones.SelectedIndex = 0;
+                    lstHabitaciones_SelectedIndexChanged(lstHabitaciones, e);
                 }
             }
         }
@@ -95,7 +102,7 @@ namespace Hotelera
         protected void clickReservar(Object sender, EventArgs e)
         {
             Usuario u = (Usuario)Session["usuario"];
-            if(u==null)
+            if (u == null)
             {
                 Response.Redirect("Registro.aspx?o=reg");
             }
@@ -110,7 +117,7 @@ namespace Hotelera
         {
             //aqui obtenemos la habitacion seleccionada
             string habs = lstHabitaciones.SelectedValue;
-            if(habs!="")//nos aseguramos que lsthabitaciones tenga algun dato seleccionado
+            if (habs != "")//nos aseguramos que lsthabitaciones tenga algun dato seleccionado
             {
                 List<Habitacion> habitaciones = (List<Habitacion>)(Session["habitaciones"]);
                 foreach (Habitacion h in habitaciones)

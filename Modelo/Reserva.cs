@@ -41,9 +41,9 @@ namespace Modelo
             this._fechaIngreso = _fechaIngreso;
             this._fechaRetiro = _fechaRetiro;
             this._habitacion = _habitacion;
-            int dias = 0;
+            double dias = 0;
             TimeSpan ts = FechaRetiro - FechaIngreso;
-            dias = ts.Days;
+            dias = ts.Days + 1;
             _costoReserva = dias * Habitacion.CostoDiario;
         }
     }
