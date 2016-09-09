@@ -40,6 +40,11 @@ namespace Modelo
             _tipo = tipo;
             _costoDiario = costoDiario;
         }
+
+        public string toString()
+        {
+            return Numero + " : " + (Tipo == TipoHabitacion.Single ? "Single" : (Tipo == TipoHabitacion.Doble ? "Doble" : "Suite"));
+        }
     }
     public enum TipoHabitacion
     {
