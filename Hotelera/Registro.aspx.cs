@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Security.Cryptography;
+using System.Text;
+using Modelo;
 
 namespace Hotelera
 {
@@ -43,7 +46,33 @@ namespace Hotelera
         /*no cacho muy bien que deberia ir en este evento*/
         protected void btnRegistra_Click(object sender, EventArgs e)
         {
-            
+            if(txtRut.Text!=""&& txtNom.Text != "" && txtApe.Text != "" && txtContra.Text != "" && txtContraConf.Text != "")
+            {
+                if(txtContra.Text==txtContraConf.Text)
+                {
+                    string[] rut = txtRut.Text.Split('-');
+                    Persona p = new Persona(int.Parse(rut[0]), rut[1][0], txtNom.Text, txtApe.Text, calNac.SelectedDate);
+                    Usuario u = new Usuario(p, encryption(txtContra.Text));
+                    List<Usuario> usuarios = (List<Usuario>)Session["usuarios"];
+                    usuarios.Add(u);
+                }
+            }
+        }
+
+        public string encryption(String password)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] encrypt;
+            UTF8Encoding encode = new UTF8Encoding();
+            //encrypt the given password string into Encrypted data  
+            encrypt = md5.ComputeHash(encode.GetBytes(password));
+            StringBuilder encryptdata = new StringBuilder();
+            //Create a new string by using the encrypted data  
+            for (int i = 0; i < encrypt.Length; i++)
+            {
+                encryptdata.Append(encrypt[i].ToString());
+            }
+            return encryptdata.ToString();
         }
 
         protected void dpmes_SelectedIndexChanged(object sender, EventArgs e)

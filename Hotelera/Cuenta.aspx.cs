@@ -14,7 +14,7 @@ namespace Hotelera
             Usuario u = (Usuario)Session["usuario"];
             txtnombres.Text = u.Persona.Nombre;
             txtapellidos.Text = u.Persona.Apellidos;
-            txtrut.Text = u.Persona.Rut.ToString() + u.Persona.Dv;
+            txtrut.Text = u.Persona.Rut.ToString() + "-" + u.Persona.Dv;
             calNac.SelectedDate = u.Persona.FechaNac;
             calNac.VisibleDate = u.Persona.FechaNac;
         }
