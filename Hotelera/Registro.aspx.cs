@@ -62,7 +62,7 @@ namespace Hotelera
                     {
                         string[] rut = txtRut.Text.Split('-');
                         Persona p = new Persona(int.Parse(rut[0].Replace(".","")), rut[1][0], txtNom.Text, txtApe.Text, calNac.SelectedDate);
-                        Usuario u = new Usuario(p, encryption(txtContra.Text));
+                        Usuario u = new Usuario(p, Usuario.encripta(txtContra.Text));
                         List<Usuario> usuarios = (List<Usuario>)Session["usuarios"];
                         if(Request.QueryString.Get("o")=="reg")
                         {
@@ -93,22 +93,6 @@ namespace Hotelera
                 erro.Text = "Rut no valido, reingrese";
             }
 
-        }
-
-        public string encryption(String password)
-        {
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            byte[] encrypt;
-            UTF8Encoding encode = new UTF8Encoding();
-            //encrypt the given password string into Encrypted data  
-            encrypt = md5.ComputeHash(encode.GetBytes(password));
-            StringBuilder encryptdata = new StringBuilder();
-            //Create a new string by using the encrypted data  
-            for (int i = 0; i < encrypt.Length; i++)
-            {
-                encryptdata.Append(encrypt[i].ToString());
-            }
-            return encryptdata.ToString();
         }
 
         protected void dpmes_SelectedIndexChanged(object sender, EventArgs e)

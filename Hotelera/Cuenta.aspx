@@ -9,7 +9,7 @@
                     <h1>Mi Cuenta</h1>
                 </td>
             </tr>
-            <tr><td colspan="3"><br /></td></tr>
+            <tr><td colspan="3"><asp:Label ID="mensaje" runat="server" Visible="false"/></td></tr>
             <tr>
                 <td>
                     <span>Nombres</span>
@@ -34,7 +34,7 @@
                 </td>
                 <td style="width:20px"><span>:</span></td>
                 <td>
-                    <asp:TextBox ID="txtrut" runat="server" style="width:330px"/>
+                    <asp:TextBox ID="txtrut" runat="server" style="width:330px" Enabled="False"/>
                 </td>
             </tr>
             <tr>
@@ -58,7 +58,8 @@
                 <td>
                     <span>Clave</span>
                 </td>
-                <td colspan="2">
+                <td style="width:20px"><span>:</span></td>
+                <td>
                     <asp:Button ID="btnclave" Text="Cambiar" runat="server" OnClick="btnclave_Click" />
                 </td>
             </tr>
