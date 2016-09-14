@@ -12,6 +12,7 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.Title = "Reservar Habitacion - Hotel Lounge";
             if (Request.QueryString.Get("e") != null)
             {
                 Session["e"] = Request.QueryString.Get("e");

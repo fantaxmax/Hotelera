@@ -14,6 +14,7 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.Title = "Registro - Hotel Lounge";
             if (dpmes.Items.Count == 0)
             {
                 ListItem[] ls = { new ListItem("Enero","1"),

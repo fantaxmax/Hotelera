@@ -11,6 +11,7 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.Title = "Mi Cuenta - Hotel Lounge";
             if(Request.QueryString.Get("o")=="ok")
             {
                 mensaje.Text = "Datos Actualizados!";

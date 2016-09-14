@@ -15,7 +15,7 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Page.Title = "Iniciar Sesión - Hotel Lounge";
         }
 
         protected void btnRegistro_Click(object sender, EventArgs e)

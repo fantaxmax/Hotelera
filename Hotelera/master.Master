@@ -22,7 +22,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <div style="float: left; margin-top: 50px; margin-left: 10px">
+                        <div style="float:left;margin-top:15px;margin-left:10px;position:relative">
+                            <asp:SiteMapPath ID="mappath" runat="server" />
+                        </div>
+                        <br />
+                        <div style="float: left; margin-top: 50px; margin-left: 10px;position:relative">
                             <!-- aqui tenemos el elemento que mantiene los hiperviculos, los añadimos mediante codebehind en base a si esta logeado, u otros -Ismael -->
                             <asp:Menu ID="navmenu" runat="server" Orientation="Vertical" OnMenuItemClick="navmenu_MenuItemClick" />
                             <asp:ContentPlaceHolder ID="menubar" runat="server">

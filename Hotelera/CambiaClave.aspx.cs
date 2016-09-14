@@ -12,7 +12,7 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Page.Title = "Cambio de Clave - Hotel Lounge";
         }
 
         protected void btncambia_Click(object sender, EventArgs e)

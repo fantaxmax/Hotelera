@@ -11,7 +11,7 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Title = "Inicio - Hotel Oceanic";
+            Page.Title = "Inicio - Hotel Lounge";
         }
     }
 }

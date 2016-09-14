@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~/Inicio.aspx" title="Inicio"  description="Pagina Principal">
+    <siteMapNode url="~/Cuenta.aspx" title="Mi Cuenta"  description="Configuracion de la cuenta">
+      <siteMapNode url="~/Reservas.aspx" title="Reservas" description="Ve tus Reservas" />
+      <siteMapNode url="~/CambiaClave.aspx" title="Cambiar Clave" description="Modifica tu clave" />
+    </siteMapNode>
+    <siteMapNode url="~/Registro.aspx" title="Registro" description="Registrarse aqui" />
+    <siteMapNode url="~/Reservar.aspx" title="Reservar" description="Reserva tu Habitación" />
+    <siteMapNode url="~/Login.aspx" title="Iniciar Sesión" description="Inicia tu sesión de cliente" />
+  </siteMapNode>
+</siteMap>

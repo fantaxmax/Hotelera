@@ -11,13 +11,24 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.Title = "Ver sus Reservar - Hotel Lounge";
+            List<Reserva> act = new List<Reserva>();
+            List<Reserva> ina = new List<Reserva>();
             Usuario u = (Usuario)Session["usuario"];
-            creaTabla(u.reservas,tablaAct);
+            foreach (Reserva r in u.reservas)
+            {
+                if (r.FechaRetiro < DateTime.Now)
+                    ina.Add(r);
+                else act.Add(r);
+            }
+            creaTabla(act, tablaAct);
+            creaTabla(ina, tablaAnt);
+            tablaAct.BorderStyle = BorderStyle.Solid;
         }
 
-        protected void creaTabla(List<Reserva> reservas,Table t)
+        protected void creaTabla(List<Reserva> reservas, Table t)
         {
-            foreach(Reserva r in reservas)
+            foreach (Reserva r in reservas)
             {
                 t.Rows.Add(creaTR(r));
             }
