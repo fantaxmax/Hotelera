@@ -70,10 +70,12 @@ namespace Hotelera
                     bool disp = true;
                     foreach (Reserva r in reservas)
                     {
-                        if ((r.Habitacion == h && (r.FechaIngreso == cdFechaIngreso.SelectedDate || r.FechaRetiro == cdFechaSalida.SelectedDate)))//revisamos si la habitacion tiene reserva ese dia
+                        if ((r.Habitacion == h && !((cdFechaIngreso.SelectedDate < r.FechaIngreso && cdFechaSalida.SelectedDate < r.FechaIngreso) ||
+                            (cdFechaIngreso.SelectedDate > r.FechaRetiro & cdFechaSalida.SelectedDate > r.FechaRetiro)))) //comprobamos que ambas fechas se encuentren antes o despues de las fechas de la reservacion
                         {
                             disp = false;//si tiene la dejamos como no disponible
                         }
+
                     }
                     if (disp)
                     {
@@ -91,13 +93,11 @@ namespace Hotelera
         protected void ingresarReserva()
         {
             List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
+            Usuario u = (Usuario)Session["usuario"];
             Reserva r = (Reserva)Session["reserva"];
             reservas.Add(r);
+            u.reservas.Add(r);
         }
-
-        //movida inicializacion de habitaciones a masterpage -Ismael
-
-
 
         protected void clickReservar(Object sender, EventArgs e)
         {

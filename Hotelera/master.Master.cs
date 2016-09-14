@@ -43,6 +43,10 @@ namespace Hotelera
                 }
                 Session["reservas"] = res;
             }
+            else
+            {
+                
+            }
             navmenu.Items.Clear();
             navmenu.Items.Add(new MenuItem("Inicio", "ini"));
             navmenu.Items.Add(new MenuItem("Reservar Habitacion", "res"));

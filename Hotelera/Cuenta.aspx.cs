@@ -38,7 +38,7 @@ namespace Hotelera
 
         protected void btnclave_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("CambiaClave.aspx");
         }
     }
 }

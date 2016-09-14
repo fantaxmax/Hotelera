@@ -34,7 +34,7 @@ namespace Modelo
             protected set { _pwd = value; }
         }
 
-        public static string encripta(string clave)
+        public static string encripta(string clave) //Obtenido desde internet
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             byte[] encrypt;

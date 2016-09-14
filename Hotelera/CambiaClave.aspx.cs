@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Modelo;
 
 namespace Hotelera
 {
@@ -16,7 +17,12 @@ namespace Hotelera
 
         protected void btncambia_Click(object sender, EventArgs e)
         {
-
+            if(txtclave.Text==txtconfclave.Text)
+            {
+                Usuario u = (Usuario)Session["usuario"];
+                u.cambiaClave(txtclave.Text);
+                Response.Redirect("Cuenta.aspx?o=ok");
+            }
         }
     }
 }
