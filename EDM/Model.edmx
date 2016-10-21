@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="hotelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="hotelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Habitacion">
           <Key>
             <PropertyRef Name="numero" />
           </Key>
           <Property Name="numero" Type="int" Nullable="false" />
-          <Property Name="tipo" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="costodiario" Type="int" Nullable="false" />
+          <Property Name="tipo" Type="int" Nullable="false" />
+          <Property Name="costoDiario" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -30,15 +30,14 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="fechaIng" Type="date" Nullable="false" />
           <Property Name="fechaRet" Type="date" Nullable="false" />
-          <Property Name="habitacion" Type="int" Nullable="false" />
           <Property Name="costo" Type="int" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="rut" Type="int" Nullable="false" />
+          <Property Name="habitacion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
-            <PropertyRef Name="username" />
+            <PropertyRef Name="rut" />
           </Key>
-          <Property Name="username" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="rut" Type="int" Nullable="false" />
           <Property Name="pwd" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -59,16 +58,16 @@
           <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
-              <PropertyRef Name="username" />
+              <PropertyRef Name="rut" />
             </Principal>
             <Dependent Role="Reserva">
-              <PropertyRef Name="username" />
+              <PropertyRef Name="rut" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Usuario_Usuario">
+        <Association Name="FK_Usuario_Persona">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Persona">
               <PropertyRef Name="rut" />
@@ -78,6 +77,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ID_RESERVA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="hotelModelStoreContainer">
           <EntitySet Name="Habitacion" EntityType="Self.Habitacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
@@ -91,52 +91,35 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Reserva" EntitySet="Reserva" />
           </AssociationSet>
-          <AssociationSet Name="FK_Usuario_Usuario" Association="Self.FK_Usuario_Usuario">
+          <AssociationSet Name="FK_Usuario_Persona" Association="Self.FK_Usuario_Persona">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="hotelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="hotelEntities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="Habitacions" EntityType="hotelModel.Habitacion" />
-          <EntitySet Name="Personas" EntityType="hotelModel.Persona" />
-          <EntitySet Name="Reservas" EntityType="hotelModel.Reserva" />
-          <EntitySet Name="Usuarios" EntityType="hotelModel.Usuario" />
-          <AssociationSet Name="FK_Reserva_Habitacion" Association="hotelModel.FK_Reserva_Habitacion">
-            <End Role="Habitacion" EntitySet="Habitacions" />
-            <End Role="Reserva" EntitySet="Reservas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Usuario_Usuario" Association="hotelModel.FK_Usuario_Usuario">
-            <End Role="Persona" EntitySet="Personas" />
-            <End Role="Usuario" EntitySet="Usuarios" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Reserva_Usuario" Association="hotelModel.FK_Reserva_Usuario">
-            <End Role="Usuario" EntitySet="Usuarios" />
-            <End Role="Reserva" EntitySet="Reservas" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Habitacion">
           <Key>
             <PropertyRef Name="numero" />
           </Key>
           <Property Name="numero" Type="Int32" Nullable="false" />
-          <Property Name="tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="costodiario" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Reservas" Relationship="hotelModel.FK_Reserva_Habitacion" FromRole="Habitacion" ToRole="Reserva" />
+          <Property Name="tipo" Type="Int32" Nullable="false" />
+          <Property Name="costoDiario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reservas" Relationship="Self.FK_Reserva_Habitacion" FromRole="Habitacion" ToRole="Reserva" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
             <PropertyRef Name="rut" />
           </Key>
           <Property Name="rut" Type="Int32" Nullable="false" />
-          <Property Name="dv" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dv" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fechaNac" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Usuarios" Relationship="hotelModel.FK_Usuario_Usuario" FromRole="Persona" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Persona" FromRole="Persona" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Reserva">
           <Key>
@@ -145,25 +128,24 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="fechaIng" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="fechaRet" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="habitacion" Type="Int32" Nullable="false" />
           <Property Name="costo" Type="Int32" Nullable="false" />
-          <Property Name="username" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Habitacion1" Relationship="hotelModel.FK_Reserva_Habitacion" FromRole="Reserva" ToRole="Habitacion" />
-          <NavigationProperty Name="Usuario" Relationship="hotelModel.FK_Reserva_Usuario" FromRole="Reserva" ToRole="Usuario" />
+          <Property Name="rut" Type="Int32" Nullable="false" />
+          <Property Name="habitacion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Habitacion1" Relationship="Self.FK_Reserva_Habitacion" FromRole="Reserva" ToRole="Habitacion" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Reserva_Usuario" FromRole="Reserva" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
-            <PropertyRef Name="username" />
+            <PropertyRef Name="rut" />
           </Key>
-          <Property Name="username" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="rut" Type="Int32" Nullable="false" />
-          <Property Name="pwd" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Persona" Relationship="hotelModel.FK_Usuario_Usuario" FromRole="Usuario" ToRole="Persona" />
-          <NavigationProperty Name="Reservas" Relationship="hotelModel.FK_Reserva_Usuario" FromRole="Usuario" ToRole="Reserva" />
+          <Property Name="pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Usuario_Persona" FromRole="Usuario" ToRole="Persona" />
+          <NavigationProperty Name="Reservas" Relationship="Self.FK_Reserva_Usuario" FromRole="Usuario" ToRole="Reserva" />
         </EntityType>
         <Association Name="FK_Reserva_Habitacion">
-          <End Type="hotelModel.Habitacion" Role="Habitacion" Multiplicity="1" />
-          <End Type="hotelModel.Reserva" Role="Reserva" Multiplicity="*" />
+          <End Role="Habitacion" Type="Self.Habitacion" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Habitacion">
               <PropertyRef Name="numero" />
@@ -173,9 +155,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Usuario_Usuario">
-          <End Type="hotelModel.Persona" Role="Persona" Multiplicity="1" />
-          <End Type="hotelModel.Usuario" Role="Usuario" Multiplicity="*" />
+        <Association Name="FK_Usuario_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Persona">
               <PropertyRef Name="rut" />
@@ -186,64 +168,83 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reserva_Usuario">
-          <End Type="hotelModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="hotelModel.Reserva" Role="Reserva" Multiplicity="*" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
-              <PropertyRef Name="username" />
+              <PropertyRef Name="rut" />
             </Principal>
             <Dependent Role="Reserva">
-              <PropertyRef Name="username" />
+              <PropertyRef Name="rut" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="hotelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Habitacions" EntityType="Self.Habitacion" />
+          <EntitySet Name="Personas" EntityType="Self.Persona" />
+          <EntitySet Name="Reservas" EntityType="Self.Reserva" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Reserva_Habitacion" Association="Self.FK_Reserva_Habitacion">
+            <End Role="Habitacion" EntitySet="Habitacions" />
+            <End Role="Reserva" EntitySet="Reservas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Persona" Association="Self.FK_Usuario_Persona">
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Usuario" Association="Self.FK_Reserva_Usuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Reserva" EntitySet="Reservas" />
+          </AssociationSet>
+          <FunctionImport Name="ID_RESERVA" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="hotelModelStoreContainer" CdmEntityContainer="hotelEntities" >
+        <EntityContainerMapping StorageEntityContainer="hotelModelStoreContainer" CdmEntityContainer="hotelEntities">
           <EntitySetMapping Name="Habitacions">
             <EntityTypeMapping TypeName="hotelModel.Habitacion">
               <MappingFragment StoreEntitySet="Habitacion">
-                <ScalarProperty Name="costodiario" ColumnName="costodiario" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="costoDiario" ColumnName="costoDiario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Personas">
             <EntityTypeMapping TypeName="hotelModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
-                <ScalarProperty Name="fechaNac" ColumnName="fechaNac" />
-                <ScalarProperty Name="apellido" ColumnName="apellido" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="dv" ColumnName="dv" />
                 <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="dv" ColumnName="dv" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="fechaNac" ColumnName="fechaNac" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reservas">
             <EntityTypeMapping TypeName="hotelModel.Reserva">
               <MappingFragment StoreEntitySet="Reserva">
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="costo" ColumnName="costo" />
-                <ScalarProperty Name="habitacion" ColumnName="habitacion" />
-                <ScalarProperty Name="fechaRet" ColumnName="fechaRet" />
-                <ScalarProperty Name="fechaIng" ColumnName="fechaIng" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fechaIng" ColumnName="fechaIng" />
+                <ScalarProperty Name="fechaRet" ColumnName="fechaRet" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="habitacion" ColumnName="habitacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="hotelModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="pwd" ColumnName="pwd" />
                 <ScalarProperty Name="rut" ColumnName="rut" />
-                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ID_RESERVA" FunctionName="hotelModel.Store.ID_RESERVA" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

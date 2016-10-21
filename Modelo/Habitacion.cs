@@ -48,6 +48,6 @@ namespace Modelo
     }
     public enum TipoHabitacion
     {
-        Single,Doble,Suite
+        Single=1,Doble=2,Suite=3
     }
 }

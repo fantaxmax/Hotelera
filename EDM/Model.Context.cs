@@ -12,6 +12,9 @@ namespace EDM
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class hotelEntities : DbContext
     {
@@ -29,5 +32,10 @@ namespace EDM
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Reserva> Reservas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+    
+        public virtual int ID_RESERVA()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ID_RESERVA");
+        }
     }
 }
