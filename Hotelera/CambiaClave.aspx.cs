@@ -21,6 +21,7 @@ namespace Hotelera
             {
                 Usuario u = (Usuario)Session["usuario"];
                 u.cambiaClave(txtclave.Text);
+                u.Modificar();
                 Response.Redirect("Cuenta.aspx?o=ok");
             }
         }

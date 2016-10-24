@@ -13,24 +13,7 @@ namespace Hotelera
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Conector con = (Conector)Session["conector"];
-            if (Session.Timeout != 25)
-                Session.Timeout = 25;
-            if(con==null)
-            {
-                con = new Conector();
-            }
             Usuario u = (Usuario)Session["usuario"];
-            List<Habitacion> habitaciones = (List<Habitacion>)Session["habitaciones"];
-            List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
-            if (habitaciones == null)
-            {
-                habitaciones = con.getHabitaciones();
-            }
-            if (reservas == null)
-            {
-                List<Reserva> res = con.getReservas();
-            }
             navmenu.Items.Clear();
             navmenu.Items.Add(new MenuItem("Inicio", "ini"));
             navmenu.Items.Add(new MenuItem("Reservar Habitacion", "res"));

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using EDM;
 namespace Modelo
 {
     public class Persona
@@ -21,7 +21,7 @@ namespace Modelo
          * 
          *
          */
-        public Persona(int _rut,char _dv,string _nombres, string _apellidos,DateTime _fechaNac)
+        public Persona(int _rut, char _dv, string _nombres, string _apellidos, DateTime _fechaNac)
         {
             Rut = _rut;
             Dv = _dv;
@@ -49,7 +49,7 @@ namespace Modelo
             protected set { _dv = value; }
         }
 
-         public string Nombre
+        public string Nombre
         {
             get { return _nombres; }
             set { _nombres = value; }
@@ -65,6 +65,59 @@ namespace Modelo
         {
             get { return _fechaNac; }
             set { _fechaNac = value; }
+        }
+
+        public bool Insertar()
+        {
+            try
+            {
+                EDM.Persona persona = new EDM.Persona();
+                persona.rut = this.Rut;
+                persona.dv = this.Dv.ToString();
+                persona.nombre = this.Nombre;
+                persona.apellido = this.Apellidos;
+                persona.fechaNac = this.FechaNac;
+                Conector.HotelEntities.Personas.Add(persona);
+                Conector.HotelEntities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool Eliminar()
+        {
+            try
+            {
+                EDM.Persona p = Conector.HotelEntities.Personas.Find(Rut);
+                Conector.HotelEntities.Personas.Remove(p);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+
+        public bool Modificar()
+        {
+            try
+            {
+                EDM.Persona p = Conector.HotelEntities.Personas.Find(Rut);
+                p.dv = Dv.ToString();
+                p.nombre = Nombre;
+                p.apellido = Apellidos;
+                p.fechaNac = FechaNac;
+                Conector.HotelEntities.SaveChanges();
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
         }
     }
 }

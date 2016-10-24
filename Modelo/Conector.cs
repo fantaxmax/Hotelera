@@ -11,8 +11,8 @@ namespace Modelo
     public class Conector
     {
         
-        public hotelEntities _hotelEntities;
-        public hotelEntities HotelEntities
+        public static hotelEntities _hotelEntities;
+        public static hotelEntities HotelEntities
         {
             get
             {
@@ -24,7 +24,7 @@ namespace Modelo
             }
         }
 
-        private List<Persona> getPersonas()
+        public static List<Persona> getPersonas()
         {
             List<EDM.Persona> lista = HotelEntities.Personas.ToList();
             List<Persona> ret = new List<Persona>();
@@ -32,12 +32,12 @@ namespace Modelo
             return ret;
         }
 
-        public Persona getPersona(int rut)
+        public static Persona getPersona(int rut)
         {
             return getPersonas().Find(persona => persona.Rut == rut);
         }
 
-        private List<Usuario> getUsuarios()
+        private static List<Usuario> getUsuarios()
         {
             List<EDM.Usuario> lista = HotelEntities.Usuarios.ToList();
             List<Usuario> ret = new List<Usuario>();
@@ -45,12 +45,12 @@ namespace Modelo
             return ret;
         }
 
-        public Usuario getUsuario(int rut)
+        public static Usuario getUsuario(int rut)
         {
             return getUsuarios().Find(usuario => usuario.Persona.Rut == rut);
         }
 
-        public List<Habitacion> getHabitaciones()
+        public static List<Habitacion> getHabitaciones()
         {
             List<EDM.Habitacion> lista = HotelEntities.Habitacions.ToList();
             List<Habitacion> ret = new List<Habitacion>();
@@ -58,12 +58,12 @@ namespace Modelo
             return ret;
         }
 
-        public Habitacion getHabitacion(int numero)
+        public static Habitacion getHabitacion(int numero)
         {
             return getHabitaciones().Find(hab => hab.Numero == numero);
         }
 
-        public List<Reserva> getReservas()
+        public static List<Reserva> getReservas()
         {
             List<EDM.Reserva> lista = HotelEntities.Reservas.ToList();
             List<Reserva> ret = new List<Reserva>();
@@ -71,14 +71,19 @@ namespace Modelo
             return ret;
         }
 
-        public List<Reserva> getReservasUsuario(int rut)
+        public static List<Reserva> getReservasUsuario(int rut)
         {
             return getReservas().FindAll(reserva => reserva.Rut == rut);
         }
 
-        public Reserva getReserva(int id)
+        public static Reserva getReserva(int id)
         {
             return getReservas().Find(reserva => reserva.ID == id);
+        }
+
+        public static int getReservaID()
+        {
+            return HotelEntities.ID_RESERVA();
         }
     }
 }

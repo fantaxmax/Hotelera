@@ -54,5 +54,52 @@ namespace Modelo
         {
             _pwd = encripta(clave);
         }
+
+        public bool Insertar()
+        {
+            try
+            {
+                EDM.Usuario u = new EDM.Usuario();
+                u.rut = Persona.Rut;
+                u.pwd = Pwd;
+                Conector.HotelEntities.Usuarios.Add(u);
+                Conector.HotelEntities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool Eliminar()
+        {
+            try
+            {
+                EDM.Usuario u = Conector.HotelEntities.Usuarios.Find(Persona.Rut);
+                Conector.HotelEntities.Usuarios.Remove(u);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+
+        public bool Modificar()
+        {
+            try
+            {
+                EDM.Usuario u = Conector.HotelEntities.Usuarios.Find(Persona.Rut);
+                u.pwd = Pwd;
+                Conector.HotelEntities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

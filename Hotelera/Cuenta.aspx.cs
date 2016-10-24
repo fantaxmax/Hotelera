@@ -34,6 +34,8 @@ namespace Hotelera
             u.Persona.Nombre = nombre;
             u.Persona.Apellidos = apellidos;
             u.Persona.FechaNac = fechanac;
+            u.Modificar();
+            u.Persona.Modificar();
             Response.Redirect("Cuenta.aspx?o=ok");
         }
 

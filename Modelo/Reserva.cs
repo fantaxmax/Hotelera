@@ -18,6 +18,7 @@ namespace Modelo
         public int ID
         {
             get { return _id; }
+            set { _id = value; }
         }
 
         public DateTime FechaIngreso
@@ -46,6 +47,7 @@ namespace Modelo
         public int Rut
         {
             get { return _rut; }
+            set { _rut = value; }
         }
 
         public Reserva(DateTime _fechaIngreso, DateTime _fechaRetiro, Habitacion _habitacion)
@@ -70,6 +72,59 @@ namespace Modelo
             dias = ts.Days + 1;
             _costoReserva = dias * Habitacion.CostoDiario;
             this._rut = _rut;
+        }
+
+        public bool Insertar()
+        {
+            try
+            {
+                EDM.Reserva r = new EDM.Reserva();
+                r.id = ID;
+                r.fechaIng = FechaIngreso;
+                r.fechaRet = FechaRetiro;
+                r.habitacion = Habitacion.Numero;
+                r.rut = Rut;
+                Conector.HotelEntities.Reservas.Add(r);
+                Conector.HotelEntities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool Eliminar()
+        {
+            try
+            {
+                EDM.Reserva r = Conector.HotelEntities.Reservas.Find(ID);
+                Conector.HotelEntities.Reservas.Remove(r);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+
+        public bool Modificar()
+        {
+            try
+            {
+                EDM.Reserva r = Conector.HotelEntities.Reservas.Find(ID);
+                r.fechaIng = FechaIngreso;
+                r.fechaRet = FechaRetiro;
+                r.habitacion = Habitacion.Numero;
+                r.rut = Rut;
+                Conector.HotelEntities.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

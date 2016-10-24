@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Hotel Oceanical</title>
+    <title>Hotel Lounge</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
         <!-- aqui si necesitamos agregar algun estilo en particulas segun sea la pagina -Ismael -->
     </asp:ContentPlaceHolder>
@@ -28,7 +28,7 @@
                         <br />
                         <div style="float: left; margin-top: 50px; margin-left: 10px;position:relative">
                             <!-- aqui tenemos el elemento que mantiene los hiperviculos, los añadimos mediante codebehind en base a si esta logeado, u otros -Ismael -->
-                            <asp:Menu ID="navmenu" runat="server" Orientation="Vertical" OnMenuItemClick="navmenu_MenuItemClick" />
+                            <asp:Menu ID="navmenu" runat="server" OnMenuItemClick="navmenu_MenuItemClick" />
                             <asp:ContentPlaceHolder ID="menubar" runat="server">
                                 <!-- aqui tenemos un espacio en caso necesitemos añadir algo en especial -Ismael -->
 

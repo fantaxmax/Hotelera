@@ -25,18 +25,34 @@ namespace Hotelera
 
         protected void btnInicioSesion_Click(object sender, EventArgs e)
         {
-            List<Usuario> usuarios = (List<Usuario>)Session["usuarios"];
-            string[] rut = txtrut.Text.Split('-');
-            int rrut = int.Parse(rut[0].Replace(".",""));
-            char dv = rut[1][0];
-            var u = from usu in usuarios
-                    where usu.Persona.Rut == rrut && usu.Persona.Dv == dv && usu.Pwd == Usuario.encripta(txtpwd.Text)
-                    select usu;
-            foreach(var v in u)
+            Usuario u = Conector.getUsuario(getRut(txtrut.Text));
+            if (Usuario.encripta(txtpwd.Text) == u.Pwd)
             {
-                Session["usuario"] = (Usuario)v;
+                Session["usuario"] = u;
+                Response.Redirect("Inicio.aspx");
             }
-            Response.Redirect("Inicio.aspx");
+            else
+            {
+                erro.Text = "Usuario o Clave incorrecto/a";
+            }
+        }
+
+        protected int getRut(String rut)
+        {
+            if(Registro.validaRut(rut))
+            {
+                rut = rut.ToUpper();
+                rut = rut.Replace(".", "");
+                rut = rut.Replace("-", "");
+                int rutAux = int.Parse(rut.Substring(0, rut.Length - 1));
+                return rutAux;
+            }
+            return 0;
+        }
+
+        protected void txtrut_TextChanged(object sender, EventArgs e)
+        {
+            erro.Text = "";
         }
     }
 }

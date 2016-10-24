@@ -18,6 +18,11 @@ namespace Hotelera
                 Session["e"] = Request.QueryString.Get("e");
                 Response.Redirect("Reservar.aspx");
             }
+            if(Request.QueryString.Get("o")=="r")
+            {
+                ingresarReserva();
+                Response.Redirect("Reservas.aspx?o=ok");
+            }
             string er = (string)Session["e"];
             if (er != null)
             {
@@ -64,14 +69,14 @@ namespace Hotelera
             else //si esta todo correcto con las fechas, cargamos las habitaciones
             {
                 lstHabitaciones.Items.Clear();
-                List<Reserva> reservas = (List<Reserva>)Session["reservas"];
-                List<Habitacion> habitaciones = (List<Habitacion>)Session["habitaciones"];
+                List<Reserva> reservas = Conector.getReservas();
+                List<Habitacion> habitaciones = Conector.getHabitaciones();
                 foreach (Habitacion h in habitaciones)
                 {
                     bool disp = true;
                     foreach (Reserva r in reservas)
                     {
-                        if ((r.Habitacion == h && !((cdFechaIngreso.SelectedDate < r.FechaIngreso && cdFechaSalida.SelectedDate < r.FechaIngreso) ||
+                        if ((r.Habitacion.Numero == h.Numero && !((cdFechaIngreso.SelectedDate < r.FechaIngreso && cdFechaSalida.SelectedDate < r.FechaIngreso) ||
                             (cdFechaIngreso.SelectedDate > r.FechaRetiro & cdFechaSalida.SelectedDate > r.FechaRetiro)))) //comprobamos que ambas fechas se encuentren antes o despues de las fechas de la reservacion
                         {
                             disp = false;//si tiene la dejamos como no disponible
@@ -93,11 +98,11 @@ namespace Hotelera
 
         protected void ingresarReserva()
         {
-            List<Reserva> reservas = (List<Reserva>)(Session["reservas"]);
             Usuario u = (Usuario)Session["usuario"];
             Reserva r = (Reserva)Session["reserva"];
-            reservas.Add(r);
-            u.reservas.Add(r);
+            r.ID = Conector.getReservaID();
+            r.Rut = u.Persona.Rut;
+            r.Insertar();
         }
 
         protected void clickReservar(Object sender, EventArgs e)
@@ -110,7 +115,7 @@ namespace Hotelera
             else
             {
                 ingresarReserva();
-                Response.Redirect("Reservas.aspx");
+                Response.Redirect("Reservas.aspx?o=ok");
             }
         }
 
@@ -120,7 +125,7 @@ namespace Hotelera
             string habs = lstHabitaciones.SelectedValue;
             if (habs != "")//nos aseguramos que lsthabitaciones tenga algun dato seleccionado
             {
-                List<Habitacion> habitaciones = (List<Habitacion>)(Session["habitaciones"]);
+                List<Habitacion> habitaciones = Conector.getHabitaciones();
                 foreach (Habitacion h in habitaciones)
                 {
                     if (h.Numero.ToString() == habs)

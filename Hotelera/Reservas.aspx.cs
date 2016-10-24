@@ -15,7 +15,7 @@ namespace Hotelera
             List<Reserva> act = new List<Reserva>();
             List<Reserva> ina = new List<Reserva>();
             Usuario u = (Usuario)Session["usuario"];
-            foreach (Reserva r in u.reservas)
+            foreach (Reserva r in Conector.getReservasUsuario(u.Persona.Rut))
             {
                 if (r.FechaRetiro < DateTime.Now)
                     ina.Add(r);
@@ -24,6 +24,7 @@ namespace Hotelera
             creaTabla(act, tablaAct);
             creaTabla(ina, tablaAnt);
             tablaAct.BorderStyle = BorderStyle.Solid;
+            tablaAnt.BorderStyle = BorderStyle.Solid;
         }
 
         protected void creaTabla(List<Reserva> reservas, Table t)

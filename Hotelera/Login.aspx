@@ -14,7 +14,7 @@
                     <span style="text-align:left">Rut</span><span style="text-align:right">:</span>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtrut" runat="server" />
+                    <asp:TextBox ID="txtrut" runat="server" OnTextChanged="txtrut_TextChanged" />
                 </td>
             </tr>
             <tr>
@@ -22,8 +22,13 @@
                     <span style="text-align:left">Clave</span><span style="text-align:right">:</span>
                 </td>
                 <td>
-                    <asp:TextBox ID="txtpwd" runat="server" TextMode="Password" />
+                    <asp:TextBox ID="txtpwd" runat="server" TextMode="Password" OnTextChanged="txtrut_TextChanged" />
                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <asp:Label ID="erro" runat="server" ForeColor="Red" />
+                </td>
             </tr>
             <tr>
                 <td>

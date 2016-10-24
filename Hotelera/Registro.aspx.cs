@@ -64,16 +64,13 @@ namespace Hotelera
                         string[] rut = txtRut.Text.Split('-');
                         Persona p = new Persona(int.Parse(rut[0].Replace(".","")), rut[1][0], txtNom.Text, txtApe.Text, calNac.SelectedDate);
                         Usuario u = new Usuario(p, Usuario.encripta(txtContra.Text));
-                        List<Usuario> usuarios = (List<Usuario>)Session["usuarios"];
-                        if(Request.QueryString.Get("o")=="reg")
-                        {
-                            Reserva r = (Reserva)Session["reserva"];
-                            List<Reserva> res = (List<Reserva>)Session["reservas"];
-                            u.reservas.Add(r);
-                            res.Add(r);
-                        }
-                        usuarios.Add(u);
+                        p.Insertar();
+                        u.Insertar();
                         Session["usuario"] = u;
+                        if (Request.QueryString.Get("o")=="reg")
+                        {
+                            Response.Redirect("Reservar.aspx?o=r");
+                        }
                         Response.Redirect("Reservas.aspx?o=ok");
                     }
                     else
@@ -116,14 +113,12 @@ namespace Hotelera
             calNac.VisibleDate = fecha;
         }
 
-        protected bool validaRut(string rut) //codigo prestado desde http://www.qualityinfosolutions.com/validador-de-rut-chileno-en-c/
+        public static bool validaRut(string rut) //codigo prestado desde http://www.qualityinfosolutions.com/validador-de-rut-chileno-en-c/
         {
             bool validacion = false;
             try
             {
                 rut = rut.ToUpper();
-                if (!rut.Contains('-'))
-                    return false;
                 rut = rut.Replace(".", "");
                 rut = rut.Replace("-", "");
                 int rutAux = int.Parse(rut.Substring(0, rut.Length - 1));
