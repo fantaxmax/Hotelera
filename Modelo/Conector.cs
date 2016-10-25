@@ -83,7 +83,7 @@ namespace Modelo
 
         public static int getReservaID()
         {
-            return HotelEntities.ID_RESERVA();
+            return getReservas().Count + 1;
         }
     }
 }

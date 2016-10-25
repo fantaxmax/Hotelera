@@ -12,7 +12,7 @@ namespace Hotelera
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.Title = "Mi Cuenta - Hotel Lounge";
-            if(Request.QueryString.Get("o")=="ok")
+            if (Request.QueryString.Get("o") == "ok")
             {
                 mensaje.Text = "Datos Actualizados!";
                 mensaje.Visible = true;
@@ -23,19 +23,21 @@ namespace Hotelera
             txtrut.Text = u.Persona.Rut.ToString() + "-" + u.Persona.Dv;
             calNac.SelectedDate = u.Persona.FechaNac;
             calNac.VisibleDate = u.Persona.FechaNac;
+
+
         }
 
         protected void btnActualiza_Click(object sender, EventArgs e)
         {
             string nombre = txtnombres.Text;
             string apellidos = txtapellidos.Text;
-            DateTime fechanac = calNac.SelectedDate;
+            DateTime fechanac = calNac.VisibleDate;
             Usuario u = (Usuario)Session["usuario"];
-            u.Persona.Nombre = nombre;
-            u.Persona.Apellidos = apellidos;
-            u.Persona.FechaNac = fechanac;
-            u.Modificar();
-            u.Persona.Modificar();
+            Persona p = Conector.getPersona(u.Persona.Rut);
+            p.Nombre = nombre;
+            p.Apellidos = apellidos;
+            p.FechaNac = fechanac;
+            p.Modificar();
             Response.Redirect("Cuenta.aspx?o=ok");
         }
 

@@ -91,8 +91,9 @@ namespace Modelo
         {
             try
             {
-                EDM.Persona p = Conector.HotelEntities.Personas.Find(Rut);
+                    EDM.Persona p = Conector.HotelEntities.Personas.ToList().Find(per => per.rut == Rut);
                 Conector.HotelEntities.Personas.Remove(p);
+                Conector.HotelEntities.SaveChanges();
                 return true;
             }
             catch (Exception e)
@@ -106,7 +107,7 @@ namespace Modelo
         {
             try
             {
-                EDM.Persona p = Conector.HotelEntities.Personas.Find(Rut);
+                EDM.Persona p = Conector.HotelEntities.Personas.ToList().Find(per => per.rut == Rut);
                 p.dv = Dv.ToString();
                 p.nombre = Nombre;
                 p.apellido = Apellidos;
